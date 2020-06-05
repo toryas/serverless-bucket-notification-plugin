@@ -1,22 +1,44 @@
 {
   "name": "serverless-bucket-notification-plugin",
-  "version": "1.0.1",
-  "description": "",
-  "main": "lib/index.js",
+  "version": "1.0.0",
+  "description": "Serverless plugin to add notification configuration in s3 buckets",
+  "main": "index.js",
+  "repository":"https://github.com/toryas/serverless-bucket-notification-plugin",
+  "homepage":"https://github.com/toryas/serverless-bucket-notification-plugin",
+  "bugs": {
+    "url": "https://github.com/toryas/serverless-bucket-notification-plugin/issues"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib",
-    "bp": "npm run build && npm pack"
+    "bp": "npm run build && npm pack",
+    "gulp": "gulp clean && npm run build && gulp build"
   },
-  "author": "",
+  "author": {
+    "name": "Felipe Nuñez",
+    "email": "toutox@gmail.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2"
+    "@babel/preset-env": "^7.10.2",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-file": "^0.4.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.689.0",
-    "uuid": "^8.1.0"
-  }
+    "aws-sdk": "^2.689.0"
+  },
+  "keywords":[
+    "serverless",
+    "s3",
+    "notification",
+    "notifications",
+    "sns",
+    "lambda",
+    "queue",
+    "topic",
+    "events"
+  ]
 }

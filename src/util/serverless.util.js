@@ -48,7 +48,7 @@ function getNotificationListByType(type, serverless) {
         case 'queue': construct = QueueConfiguration;
             break;
     }
-    let config = serverless.service.custom.BucketNotificationConfig
+    let config = serverless.service.custom.BucketNotificationConfig;
     let notifications = config.notifications.filter(item => Object.keys(item) == type)
 
     let listNotification = new Array();

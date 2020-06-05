@@ -20,18 +20,16 @@ class ServerlessPlugin {
 
     this.hooks = {
       'putEvent:run': this.putEvent.bind(this),
-      'getInfo:run': this.show.bind(this),
+      'after:deploy:finalize': this.putEvent.bind(this),
     };
-  }
-
-  show(){
-    console.log(this.serverless.service)
   }
 
   async putEvent(){
     this.serverless.cli.log("Running plugin -> Serverless Bucket Notification Plugin")
     let bh = new BucketHelper(this.serverless)
     bh.putNotification();
+    this.serverless.cli.log("Serverless Bucket Notification Plugin -> Done")
+
 
   }
 

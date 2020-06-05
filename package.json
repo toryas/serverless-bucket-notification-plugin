@@ -1,0 +1,22 @@
+{
+  "name": "serverless-bucket-notification-plugin",
+  "version": "1.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib",
+    "bp": "npm run build && npm pack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.689.0",
+    "uuid": "^8.1.0"
+  }
+}

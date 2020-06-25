@@ -26,7 +26,7 @@ export default class BucketHelper {
             }
                 
         } else {
-            console.log(`algo salio mal`)
+            this.serverless.cli.log(`[ERROR]:Bucket ${config.Bucket} not exist`)
         }
 
     }

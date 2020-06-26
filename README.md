@@ -2,7 +2,7 @@
 
 ## Upadate v2.0.0
 
- - Add support for multiples buckets to set notification
+ - Add support to set notification in multiple buckets
 
 ## How to use
 

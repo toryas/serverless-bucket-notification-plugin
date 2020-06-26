@@ -1,13 +1,12 @@
 # Toryas / Serverless Bucket Notification Plugin
 
+## Upadate v2.0.0
 
-This is a very poor readme for this plugin but now I so tired to write the full descriptions... I will update this readme later :)
-
-So this is the essential
+ - Add support for multiples buckets to set notification
 
 ## How to use
 
-Install the plugin with `npm i -S serverless-bucket-notification-plugin`
+Install the plugin with `npm i -D serverless-bucket-notification-plugin`
 
 add the plugin in the serverless.yml file config
 
@@ -22,7 +21,7 @@ Add the configuration in the serverless.yml file to create a notification events
 
 custom:
   BucketNotificationConfig:
-    bucket: MyBucket # Required
+  - bucket: MyBucket # Required
     notifications: # Required
       - topic:
           name: notificationName # Required 
@@ -58,7 +57,15 @@ You can add your notifications as you like.
 ```yml
 custom:
   BucketNotificationConfig:
-    bucket: MyBucket # Required
+  - bucket: MyBucket # Required
+    notifications: # Required
+      - topic:
+            ...
+      - topic:
+            ...
+      - lambda:
+            ...
+  - bucket: MyOtherBucket # Required
     notifications: # Required
       - topic:
             ...
@@ -72,34 +79,16 @@ custom:
 ```yml
 custom:
   BucketNotificationConfig:
-    bucket: MyBucket # Required
+  - bucket: MyBucket # Required
     notifications: # Required
       - topic:
             ...
 ```
 
-Finally the notification configuration add a events in your bucket after stack deploy.
+Finally the notification configuration add a events in yours buckets after stack deploy.
 
 `sls deploy`
 
-```s
-Serverless: Packaging service...
-Serverless: Excluding development dependencies...
-Serverless: Uploading CloudFormation file to S3...
-Serverless: Uploading artifacts...
-Serverless: Uploading service test.zip file to S3 (8.91 MB)...
-Serverless: Validating template...
-Serverless: Updating Stack...
-Serverless: Checking Stack update progress...
-.........
-Serverless: Stack update finished...
-Service Information
-........
-Serverless: Run the "serverless" command to setup monitoring, troubleshooting and testing.
-Serverless: Running plugin -> Serverless Bucket Notification Plugin
-Serverless: Serverless Bucket Notification Plugin -> Done
-```
-
-Optionally you can put the notification configuration without deploy with the command `sls putEvent`.
+Optionally you can put the notification configuration without deploy with the command `sls putEvents`.
 
 Thanks for use, please report any problem [here](https://github.com/toryas/serverless-bucket-notification-plugin/issues)

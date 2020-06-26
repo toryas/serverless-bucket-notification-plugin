@@ -1,13 +1,13 @@
 import BucketHelper from './helper/bucket.helper'
 
 
-class ServerlessPlugin {
+class BucketNotificationConfigPlugin {
   constructor(serverless, options) {
     this.serverless = serverless;
     this.options = options;
 
     this.commands = {
-      putEvent: {
+      putEvents: {
         usage: 'to put notification event in bucket',
         lifecycleEvents: [
           'run',
@@ -19,20 +19,20 @@ class ServerlessPlugin {
     };
 
     this.hooks = {
-      'putEvent:run': this.putEvent.bind(this),
-      'after:deploy:finalize': this.putEvent.bind(this),
+      'putEvents:run': this.putEvents.bind(this),
+      'after:deploy:finalize': this.putEvents.bind(this),
     };
   }
 
-  async putEvent(){
-    this.serverless.cli.log("Running plugin -> Serverless Bucket Notification Plugin")
+  async putEvents(){
+    this.serverless.cli.log("[Serverless Bucket Notification Plugin]:Start")
     let bh = new BucketHelper(this.serverless)
-    bh.putNotification();
-    this.serverless.cli.log("Serverless Bucket Notification Plugin -> Done")
+    await bh.putNotifications();
+    this.serverless.cli.log("[Serverless Bucket Notification Plugin]:Done")
 
 
   }
 
 }
 
-module.exports = ServerlessPlugin;
+module.exports = BucketNotificationConfigPlugin;

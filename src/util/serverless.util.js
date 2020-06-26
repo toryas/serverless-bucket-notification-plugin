@@ -14,17 +14,26 @@ export function getAWSCredentials(serverless) {
 }
 
 /**
- * Return notification config, from serverless.yml
- * @param {*} serverless Serverless Object
+ * Return array whit notification configurations groups
+ * @param {*} serverless Serverless object
  */
-export function getCustomBucketNotificationConfig(serverless) {
+export function getCustomBucketNotificationConfigArray(serverless){
+    let arrayConfig = serverless.service.custom.BucketNotificationConfig;
+    return arrayConfig;
+}
 
-    let topicNotifications = getNotificationListByType('topic', serverless);
-    let lambdaNotifications = getNotificationListByType('lambda', serverless);
-    let queueNotifications = getNotificationListByType('queue', serverless)
+/**
+ * Return notification config, from serverless.yml
+ * @param {*} customeBucketNotificationConfigurationItem notification config for bucket
+ */
+export function getCustomBucketNotificationConfig(customeBucketNotificationConfigurationItem) {
+
+    let topicNotifications = getNotificationListByType('topic', customeBucketNotificationConfigurationItem);
+    let lambdaNotifications = getNotificationListByType('lambda', customeBucketNotificationConfigurationItem);
+    let queueNotifications = getNotificationListByType('queue', customeBucketNotificationConfigurationItem)
 
     return {
-        Bucket:serverless.service.custom.BucketNotificationConfig.bucket,
+        Bucket:customeBucketNotificationConfigurationItem.bucket,
         NotificationConfiguration:new NotificationConfiguration(lambdaNotifications,topicNotifications,queueNotifications)
     }
         
@@ -32,13 +41,13 @@ export function getCustomBucketNotificationConfig(serverless) {
 }
 
 /**
- * Return list of notification type from bucketNotificationConfiguration in serverless.yml
+ * Return list of notification type from bucketNotificationConfigurationItem in serverless.yml
  * @param {string} element Element type notification config
- * @param {Object} serverless Serverless Object
+ * @param {Object} customeBucketNotificationConfigurationItem notification config for bucket
  * 
  * @return {Array<TopicConfiguration>|Array<LambdaFunctionConfiguration>|Array<QueueConfiguration>} notification list 
  */
-function getNotificationListByType(type, serverless) {
+function getNotificationListByType(type, customeBucketNotificationConfigurationItem) {
     let construct;
     switch (type) {
         case 'topic': construct = TopicConfiguration;
@@ -48,8 +57,7 @@ function getNotificationListByType(type, serverless) {
         case 'queue': construct = QueueConfiguration;
             break;
     }
-    let config = serverless.service.custom.BucketNotificationConfig;
-    let notifications = config.notifications.filter(item => Object.keys(item) == type)
+    let notifications = customeBucketNotificationConfigurationItem.notifications.filter(item => Object.keys(item) == type)
 
     let listNotification = new Array();
     for (let item of notifications) {

@@ -1,17 +1,17 @@
 {
   "name": "serverless-bucket-notification-plugin",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Serverless plugin to add notification configuration in s3 buckets",
   "main": "index.js",
-  "repository":"https://github.com/toryas/serverless-bucket-notification-plugin",
-  "homepage":"https://github.com/toryas/serverless-bucket-notification-plugin",
+  "repository": "https://github.com/toryas/serverless-bucket-notification-plugin",
+  "homepage": "https://github.com/toryas/serverless-bucket-notification-plugin",
   "bugs": {
     "url": "https://github.com/toryas/serverless-bucket-notification-plugin/issues"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib",
-    "bp": "npm run build && npm pack",
+    "bp": "npm run gulp && npm pack lib/",
     "gulp": "gulp clean && npm run build && gulp build"
   },
   "author": {
@@ -30,7 +30,7 @@
   "dependencies": {
     "aws-sdk": "^2.689.0"
   },
-  "keywords":[
+  "keywords": [
     "serverless",
     "s3",
     "notification",

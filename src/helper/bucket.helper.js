@@ -1,4 +1,4 @@
-import { getAWSCredentials, getCustomBucketNotificationConfig } from '../util/serverless.util'
+import { getAWSCredentials, getCustomBucketNotificationConfig, getCustomBucketNotificationConfigArray } from '../util/serverless.util'
 import { makeS3service } from '../util/aws.util';
 import NotificationConfiguration from '../domain/notification-configuration'
 import BucketNotificationConfiguration from '../domain/bucket-notification-configuration';
@@ -9,8 +9,16 @@ export default class BucketHelper {
         this.s3 = makeS3service(getAWSCredentials(this.serverless));
     }
 
-    async putNotification() {
-        let config = await getCustomBucketNotificationConfig(this.serverless);
+
+    async putNotifications(){
+        let arrayConfigBuckets = getCustomBucketNotificationConfigArray(this.serverless);
+        for(let config of arrayConfigBuckets ){
+            await this.putNotificationByBucket(config);
+        }
+    }
+
+    async putNotificationByBucket(bucketConfiguration) {
+        let config = getCustomBucketNotificationConfig(bucketConfiguration);
         if (await this.isBucketExist(config.Bucket)) {
             let currentBNConfig = await this.getCurrentNotificationBucket(config.Bucket);
             let lisTopic = this.mergeList(currentBNConfig.TopicConfigurations,config.NotificationConfiguration.TopicConfigurations)
@@ -20,9 +28,10 @@ export default class BucketHelper {
             let finalConfig = new BucketNotificationConfiguration(config.Bucket,
                 new NotificationConfiguration(lisLambdas,lisTopic,lisQueue))
             try{
-                await this.s3.putBucketNotificationConfiguration(finalConfig).promise()
+                this.serverless.cli.log(`Setting notification config for bucket ${config.Bucket}`)
+                let resp = await this.s3.putBucketNotificationConfiguration(finalConfig).promise();
             }catch(e){
-                this.serverless.cli.log(`[ERROR]:${e.message}`)
+                this.serverless.cli.log(`[ERROR][Bucket ${config.Bucket}]:${e.message}`)
             }
                 
         } else {
